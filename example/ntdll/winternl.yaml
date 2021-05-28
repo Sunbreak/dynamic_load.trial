@@ -1,0 +1,11 @@
+name: winternl
+description: Bindings to `winternl.h`.
+output: 'example/ntdll/winternl.dart'
+headers:
+  entry-points:
+    - 'example/ntdll/winternl_.h'
+  include-directives: # include only these header files and necessary structs from other header files
+    - '**winternl_.h'
+size-map:
+  long: 4
+  unsigned long: 4
