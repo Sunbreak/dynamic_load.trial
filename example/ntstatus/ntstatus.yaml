@@ -1,6 +1,6 @@
 name: ntstatus
 description: Bindings to `ntstatus.h`.
-output: 'example/ntstatus/_ntstatus.dart'
+output: 'example/ntstatus/ntstatus.dart'
 headers:
   entry-points:
     - 'example/ntstatus/_ntstatus.h'
