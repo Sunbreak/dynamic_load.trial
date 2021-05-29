@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:ffi/ffi.dart';
 
 import 'ntdll/winternl.dart';
+import 'ntstatus/ntstatus.dart';
 
 void main() {
   using((Arena arena) {
@@ -13,6 +14,7 @@ void main() {
         0,
         pNeedSize);
 
-    print('status $status, needSize ${pNeedSize.value}');
+    print(
+        'status $status, ${status == STATUS_INFO_LENGTH_MISMATCH}, needSize ${pNeedSize.value}');
   });
 }
