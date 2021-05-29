@@ -1,21 +1,18 @@
 import 'dart:ffi';
 
-import 'package:dynamic_load/dynamic_load.dart';
 import 'package:ffi/ffi.dart';
 
 import 'ntdll/winternl.dart';
 
 void main() {
   using((Arena arena) {
-    final pNtQuerySystemInformation =
-        getFuncAddress('ntdll.dll', 'NtQuerySystemInformation');
-    print('pNtQuerySystemInformation $pNtQuerySystemInformation');
+    final pNeedSize = arena<Uint32>();
+    var status = funcNtQuerySystemInformation(
+        SYSTEM_INFORMATION_CLASS.SystemProcessInformation,
+        nullptr,
+        0,
+        pNeedSize);
 
-    final funcNtQuerySystemInformation =
-        Pointer<NativeFunction<c_NtQuerySystemInformation>>.fromAddress(
-                pNtQuerySystemInformation)
-            .asFunction<dart_NtQuerySystemInformation>();
-
-    print('funcNtQuerySystemInformation $funcNtQuerySystemInformation');
+    print('status $status, needSize ${pNeedSize.value}');
   });
 }
