@@ -6,6 +6,10 @@ headers:
     - 'example/ntdll/_winternl.h'
   include-directives: # include only these header files and necessary structs from other header files
     - '**winternl.h'
+functions:
+  expose-typedefs:
+    include:
+      - 'NtQuerySystemInformation'
 size-map:
   long: 4
   unsigned long: 4

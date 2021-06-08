@@ -19,27 +19,28 @@ class winternl {
       : _lookup = lookup;
 
   int NtClose(
-    ffi.Pointer<ffi.Void> Handle,
+    HANDLE Handle,
   ) {
     return _NtClose(
       Handle,
     );
   }
 
-  late final _NtClose_ptr = _lookup<ffi.NativeFunction<_c_NtClose>>('NtClose');
-  late final _dart_NtClose _NtClose = _NtClose_ptr.asFunction<_dart_NtClose>();
+  late final _NtClosePtr =
+      _lookup<ffi.NativeFunction<NTSTATUS Function(HANDLE)>>('NtClose');
+  late final _NtClose = _NtClosePtr.asFunction<int Function(HANDLE)>();
 
   int NtCreateFile(
-    ffi.Pointer<ffi.Pointer<ffi.Void>> FileHandle,
+    PHANDLE FileHandle,
     int DesiredAccess,
-    ffi.Pointer<OBJECT_ATTRIBUTES> ObjectAttributes,
-    ffi.Pointer<IO_STATUS_BLOCK> IoStatusBlock,
-    ffi.Pointer<LARGE_INTEGER> AllocationSize,
+    POBJECT_ATTRIBUTES ObjectAttributes,
+    PIO_STATUS_BLOCK IoStatusBlock,
+    PLARGE_INTEGER AllocationSize,
     int FileAttributes,
     int ShareAccess,
     int CreateDisposition,
     int CreateOptions,
-    ffi.Pointer<ffi.Void> EaBuffer,
+    PVOID EaBuffer,
     int EaLength,
   ) {
     return _NtCreateFile(
@@ -57,16 +58,29 @@ class winternl {
     );
   }
 
-  late final _NtCreateFile_ptr =
-      _lookup<ffi.NativeFunction<_c_NtCreateFile>>('NtCreateFile');
-  late final _dart_NtCreateFile _NtCreateFile =
-      _NtCreateFile_ptr.asFunction<_dart_NtCreateFile>();
+  late final _NtCreateFilePtr = _lookup<
+      ffi.NativeFunction<
+          NTSTATUS Function(
+              PHANDLE,
+              ACCESS_MASK,
+              POBJECT_ATTRIBUTES,
+              PIO_STATUS_BLOCK,
+              PLARGE_INTEGER,
+              ULONG,
+              ULONG,
+              ULONG,
+              ULONG,
+              PVOID,
+              ULONG)>>('NtCreateFile');
+  late final _NtCreateFile = _NtCreateFilePtr.asFunction<
+      int Function(PHANDLE, int, POBJECT_ATTRIBUTES, PIO_STATUS_BLOCK,
+          PLARGE_INTEGER, int, int, int, int, PVOID, int)>();
 
   int NtOpenFile(
-    ffi.Pointer<ffi.Pointer<ffi.Void>> FileHandle,
+    PHANDLE FileHandle,
     int DesiredAccess,
-    ffi.Pointer<OBJECT_ATTRIBUTES> ObjectAttributes,
-    ffi.Pointer<IO_STATUS_BLOCK> IoStatusBlock,
+    POBJECT_ATTRIBUTES ObjectAttributes,
+    PIO_STATUS_BLOCK IoStatusBlock,
     int ShareAccess,
     int OpenOptions,
   ) {
@@ -80,14 +94,17 @@ class winternl {
     );
   }
 
-  late final _NtOpenFile_ptr =
-      _lookup<ffi.NativeFunction<_c_NtOpenFile>>('NtOpenFile');
-  late final _dart_NtOpenFile _NtOpenFile =
-      _NtOpenFile_ptr.asFunction<_dart_NtOpenFile>();
+  late final _NtOpenFilePtr = _lookup<
+      ffi.NativeFunction<
+          NTSTATUS Function(PHANDLE, ACCESS_MASK, POBJECT_ATTRIBUTES,
+              PIO_STATUS_BLOCK, ULONG, ULONG)>>('NtOpenFile');
+  late final _NtOpenFile = _NtOpenFilePtr.asFunction<
+      int Function(
+          PHANDLE, int, POBJECT_ATTRIBUTES, PIO_STATUS_BLOCK, int, int)>();
 
   int NtRenameKey(
-    ffi.Pointer<ffi.Void> KeyHandle,
-    ffi.Pointer<UNICODE_STRING> NewName,
+    HANDLE KeyHandle,
+    PUNICODE_STRING NewName,
   ) {
     return _NtRenameKey(
       KeyHandle,
@@ -95,22 +112,23 @@ class winternl {
     );
   }
 
-  late final _NtRenameKey_ptr =
-      _lookup<ffi.NativeFunction<_c_NtRenameKey>>('NtRenameKey');
-  late final _dart_NtRenameKey _NtRenameKey =
-      _NtRenameKey_ptr.asFunction<_dart_NtRenameKey>();
+  late final _NtRenameKeyPtr =
+      _lookup<ffi.NativeFunction<NTSTATUS Function(HANDLE, PUNICODE_STRING)>>(
+          'NtRenameKey');
+  late final _NtRenameKey =
+      _NtRenameKeyPtr.asFunction<int Function(HANDLE, PUNICODE_STRING)>();
 
   int NtNotifyChangeMultipleKeys(
-    ffi.Pointer<ffi.Void> MasterKeyHandle,
+    HANDLE MasterKeyHandle,
     int Count,
     ffi.Pointer<OBJECT_ATTRIBUTES> SubordinateObjects,
-    ffi.Pointer<ffi.Void> Event,
-    ffi.Pointer<ffi.NativeFunction<PIO_APC_ROUTINE>> ApcRoutine,
-    ffi.Pointer<ffi.Void> ApcContext,
-    ffi.Pointer<IO_STATUS_BLOCK> IoStatusBlock,
+    HANDLE Event,
+    PIO_APC_ROUTINE ApcRoutine,
+    PVOID ApcContext,
+    PIO_STATUS_BLOCK IoStatusBlock,
     int CompletionFilter,
     int WatchTree,
-    ffi.Pointer<ffi.Void> Buffer,
+    PVOID Buffer,
     int BufferSize,
     int Asynchronous,
   ) {
@@ -130,20 +148,44 @@ class winternl {
     );
   }
 
-  late final _NtNotifyChangeMultipleKeys_ptr =
-      _lookup<ffi.NativeFunction<_c_NtNotifyChangeMultipleKeys>>(
-          'NtNotifyChangeMultipleKeys');
-  late final _dart_NtNotifyChangeMultipleKeys _NtNotifyChangeMultipleKeys =
-      _NtNotifyChangeMultipleKeys_ptr.asFunction<
-          _dart_NtNotifyChangeMultipleKeys>();
+  late final _NtNotifyChangeMultipleKeysPtr = _lookup<
+      ffi.NativeFunction<
+          NTSTATUS Function(
+              HANDLE,
+              ULONG,
+              ffi.Pointer<OBJECT_ATTRIBUTES>,
+              HANDLE,
+              PIO_APC_ROUTINE,
+              PVOID,
+              PIO_STATUS_BLOCK,
+              ULONG,
+              BOOLEAN,
+              PVOID,
+              ULONG,
+              BOOLEAN)>>('NtNotifyChangeMultipleKeys');
+  late final _NtNotifyChangeMultipleKeys =
+      _NtNotifyChangeMultipleKeysPtr.asFunction<
+          int Function(
+              HANDLE,
+              int,
+              ffi.Pointer<OBJECT_ATTRIBUTES>,
+              HANDLE,
+              PIO_APC_ROUTINE,
+              PVOID,
+              PIO_STATUS_BLOCK,
+              int,
+              int,
+              PVOID,
+              int,
+              int)>();
 
   int NtQueryMultipleValueKey(
-    ffi.Pointer<ffi.Void> KeyHandle,
-    ffi.Pointer<KEY_VALUE_ENTRY> ValueEntries,
+    HANDLE KeyHandle,
+    PKEY_VALUE_ENTRY ValueEntries,
     int EntryCount,
-    ffi.Pointer<ffi.Void> ValueBuffer,
-    ffi.Pointer<ffi.Uint32> BufferLength,
-    ffi.Pointer<ffi.Uint32> RequiredBufferLength,
+    PVOID ValueBuffer,
+    PULONG BufferLength,
+    PULONG RequiredBufferLength,
   ) {
     return _NtQueryMultipleValueKey(
       KeyHandle,
@@ -155,16 +197,17 @@ class winternl {
     );
   }
 
-  late final _NtQueryMultipleValueKey_ptr =
-      _lookup<ffi.NativeFunction<_c_NtQueryMultipleValueKey>>(
-          'NtQueryMultipleValueKey');
-  late final _dart_NtQueryMultipleValueKey _NtQueryMultipleValueKey =
-      _NtQueryMultipleValueKey_ptr.asFunction<_dart_NtQueryMultipleValueKey>();
+  late final _NtQueryMultipleValueKeyPtr = _lookup<
+      ffi.NativeFunction<
+          NTSTATUS Function(HANDLE, PKEY_VALUE_ENTRY, ULONG, PVOID, PULONG,
+              PULONG)>>('NtQueryMultipleValueKey');
+  late final _NtQueryMultipleValueKey = _NtQueryMultipleValueKeyPtr.asFunction<
+      int Function(HANDLE, PKEY_VALUE_ENTRY, int, PVOID, PULONG, PULONG)>();
 
   int NtSetInformationKey(
-    ffi.Pointer<ffi.Void> KeyHandle,
+    HANDLE KeyHandle,
     int KeySetInformationClass,
-    ffi.Pointer<ffi.Void> KeySetInformation,
+    PVOID KeySetInformation,
     int KeySetInformationLength,
   ) {
     return _NtSetInformationKey(
@@ -175,22 +218,23 @@ class winternl {
     );
   }
 
-  late final _NtSetInformationKey_ptr =
-      _lookup<ffi.NativeFunction<_c_NtSetInformationKey>>(
-          'NtSetInformationKey');
-  late final _dart_NtSetInformationKey _NtSetInformationKey =
-      _NtSetInformationKey_ptr.asFunction<_dart_NtSetInformationKey>();
+  late final _NtSetInformationKeyPtr = _lookup<
+      ffi.NativeFunction<
+          NTSTATUS Function(
+              HANDLE, ffi.Int32, PVOID, ULONG)>>('NtSetInformationKey');
+  late final _NtSetInformationKey = _NtSetInformationKeyPtr.asFunction<
+      int Function(HANDLE, int, PVOID, int)>();
 
   int NtDeviceIoControlFile(
-    ffi.Pointer<ffi.Void> FileHandle,
-    ffi.Pointer<ffi.Void> Event,
-    ffi.Pointer<ffi.NativeFunction<PIO_APC_ROUTINE>> ApcRoutine,
-    ffi.Pointer<ffi.Void> ApcContext,
-    ffi.Pointer<IO_STATUS_BLOCK> IoStatusBlock,
+    HANDLE FileHandle,
+    HANDLE Event,
+    PIO_APC_ROUTINE ApcRoutine,
+    PVOID ApcContext,
+    PIO_STATUS_BLOCK IoStatusBlock,
     int IoControlCode,
-    ffi.Pointer<ffi.Void> InputBuffer,
+    PVOID InputBuffer,
     int InputBufferLength,
-    ffi.Pointer<ffi.Void> OutputBuffer,
+    PVOID OutputBuffer,
     int OutputBufferLength,
   ) {
     return _NtDeviceIoControlFile(
@@ -207,16 +251,27 @@ class winternl {
     );
   }
 
-  late final _NtDeviceIoControlFile_ptr =
-      _lookup<ffi.NativeFunction<_c_NtDeviceIoControlFile>>(
-          'NtDeviceIoControlFile');
-  late final _dart_NtDeviceIoControlFile _NtDeviceIoControlFile =
-      _NtDeviceIoControlFile_ptr.asFunction<_dart_NtDeviceIoControlFile>();
+  late final _NtDeviceIoControlFilePtr = _lookup<
+      ffi.NativeFunction<
+          NTSTATUS Function(
+              HANDLE,
+              HANDLE,
+              PIO_APC_ROUTINE,
+              PVOID,
+              PIO_STATUS_BLOCK,
+              ULONG,
+              PVOID,
+              ULONG,
+              PVOID,
+              ULONG)>>('NtDeviceIoControlFile');
+  late final _NtDeviceIoControlFile = _NtDeviceIoControlFilePtr.asFunction<
+      int Function(HANDLE, HANDLE, PIO_APC_ROUTINE, PVOID, PIO_STATUS_BLOCK,
+          int, PVOID, int, PVOID, int)>();
 
   int NtWaitForSingleObject(
-    ffi.Pointer<ffi.Void> Handle,
+    HANDLE Handle,
     int Alertable,
-    ffi.Pointer<LARGE_INTEGER> Timeout,
+    PLARGE_INTEGER Timeout,
   ) {
     return _NtWaitForSingleObject(
       Handle,
@@ -225,16 +280,17 @@ class winternl {
     );
   }
 
-  late final _NtWaitForSingleObject_ptr =
-      _lookup<ffi.NativeFunction<_c_NtWaitForSingleObject>>(
-          'NtWaitForSingleObject');
-  late final _dart_NtWaitForSingleObject _NtWaitForSingleObject =
-      _NtWaitForSingleObject_ptr.asFunction<_dart_NtWaitForSingleObject>();
+  late final _NtWaitForSingleObjectPtr = _lookup<
+      ffi.NativeFunction<
+          NTSTATUS Function(
+              HANDLE, BOOLEAN, PLARGE_INTEGER)>>('NtWaitForSingleObject');
+  late final _NtWaitForSingleObject = _NtWaitForSingleObjectPtr.asFunction<
+      int Function(HANDLE, int, PLARGE_INTEGER)>();
 
   int RtlIsNameLegalDOS8Dot3(
-    ffi.Pointer<UNICODE_STRING> Name,
-    ffi.Pointer<STRING> OemName,
-    ffi.Pointer<ffi.Uint8> NameContainsSpaces,
+    PUNICODE_STRING Name,
+    POEM_STRING OemName,
+    PBOOLEAN NameContainsSpaces,
   ) {
     return _RtlIsNameLegalDOS8Dot3(
       Name,
@@ -243,11 +299,12 @@ class winternl {
     );
   }
 
-  late final _RtlIsNameLegalDOS8Dot3_ptr =
-      _lookup<ffi.NativeFunction<_c_RtlIsNameLegalDOS8Dot3>>(
-          'RtlIsNameLegalDOS8Dot3');
-  late final _dart_RtlIsNameLegalDOS8Dot3 _RtlIsNameLegalDOS8Dot3 =
-      _RtlIsNameLegalDOS8Dot3_ptr.asFunction<_dart_RtlIsNameLegalDOS8Dot3>();
+  late final _RtlIsNameLegalDOS8Dot3Ptr = _lookup<
+      ffi.NativeFunction<
+          BOOLEAN Function(PUNICODE_STRING, POEM_STRING,
+              PBOOLEAN)>>('RtlIsNameLegalDOS8Dot3');
+  late final _RtlIsNameLegalDOS8Dot3 = _RtlIsNameLegalDOS8Dot3Ptr.asFunction<
+      int Function(PUNICODE_STRING, POEM_STRING, PBOOLEAN)>();
 
   int RtlNtStatusToDosError(
     int Status,
@@ -257,18 +314,18 @@ class winternl {
     );
   }
 
-  late final _RtlNtStatusToDosError_ptr =
-      _lookup<ffi.NativeFunction<_c_RtlNtStatusToDosError>>(
+  late final _RtlNtStatusToDosErrorPtr =
+      _lookup<ffi.NativeFunction<ULONG Function(NTSTATUS)>>(
           'RtlNtStatusToDosError');
-  late final _dart_RtlNtStatusToDosError _RtlNtStatusToDosError =
-      _RtlNtStatusToDosError_ptr.asFunction<_dart_RtlNtStatusToDosError>();
+  late final _RtlNtStatusToDosError =
+      _RtlNtStatusToDosErrorPtr.asFunction<int Function(int)>();
 
   int NtQueryInformationProcess(
-    ffi.Pointer<ffi.Void> ProcessHandle,
+    HANDLE ProcessHandle,
     int ProcessInformationClass,
-    ffi.Pointer<ffi.Void> ProcessInformation,
+    PVOID ProcessInformation,
     int ProcessInformationLength,
-    ffi.Pointer<ffi.Uint32> ReturnLength,
+    PULONG ReturnLength,
   ) {
     return _NtQueryInformationProcess(
       ProcessHandle,
@@ -279,19 +336,19 @@ class winternl {
     );
   }
 
-  late final _NtQueryInformationProcess_ptr =
-      _lookup<ffi.NativeFunction<_c_NtQueryInformationProcess>>(
-          'NtQueryInformationProcess');
-  late final _dart_NtQueryInformationProcess _NtQueryInformationProcess =
-      _NtQueryInformationProcess_ptr.asFunction<
-          _dart_NtQueryInformationProcess>();
+  late final _NtQueryInformationProcessPtr = _lookup<
+      ffi.NativeFunction<
+          NTSTATUS Function(HANDLE, ffi.Int32, PVOID, ULONG,
+              PULONG)>>('NtQueryInformationProcess');
+  late final _NtQueryInformationProcess = _NtQueryInformationProcessPtr
+      .asFunction<int Function(HANDLE, int, PVOID, int, PULONG)>();
 
   int NtQueryInformationThread(
-    ffi.Pointer<ffi.Void> ThreadHandle,
+    HANDLE ThreadHandle,
     int ThreadInformationClass,
-    ffi.Pointer<ffi.Void> ThreadInformation,
+    PVOID ThreadInformation,
     int ThreadInformationLength,
-    ffi.Pointer<ffi.Uint32> ReturnLength,
+    PULONG ReturnLength,
   ) {
     return _NtQueryInformationThread(
       ThreadHandle,
@@ -302,19 +359,19 @@ class winternl {
     );
   }
 
-  late final _NtQueryInformationThread_ptr =
-      _lookup<ffi.NativeFunction<_c_NtQueryInformationThread>>(
-          'NtQueryInformationThread');
-  late final _dart_NtQueryInformationThread _NtQueryInformationThread =
-      _NtQueryInformationThread_ptr.asFunction<
-          _dart_NtQueryInformationThread>();
+  late final _NtQueryInformationThreadPtr = _lookup<
+      ffi.NativeFunction<
+          NTSTATUS Function(HANDLE, ffi.Int32, PVOID, ULONG,
+              PULONG)>>('NtQueryInformationThread');
+  late final _NtQueryInformationThread = _NtQueryInformationThreadPtr
+      .asFunction<int Function(HANDLE, int, PVOID, int, PULONG)>();
 
   int NtQueryObject(
-    ffi.Pointer<ffi.Void> Handle,
+    HANDLE Handle,
     int ObjectInformationClass,
-    ffi.Pointer<ffi.Void> ObjectInformation,
+    PVOID ObjectInformation,
     int ObjectInformationLength,
-    ffi.Pointer<ffi.Uint32> ReturnLength,
+    PULONG ReturnLength,
   ) {
     return _NtQueryObject(
       Handle,
@@ -325,16 +382,18 @@ class winternl {
     );
   }
 
-  late final _NtQueryObject_ptr =
-      _lookup<ffi.NativeFunction<_c_NtQueryObject>>('NtQueryObject');
-  late final _dart_NtQueryObject _NtQueryObject =
-      _NtQueryObject_ptr.asFunction<_dart_NtQueryObject>();
+  late final _NtQueryObjectPtr = _lookup<
+      ffi.NativeFunction<
+          NTSTATUS Function(
+              HANDLE, ffi.Int32, PVOID, ULONG, PULONG)>>('NtQueryObject');
+  late final _NtQueryObject = _NtQueryObjectPtr.asFunction<
+      int Function(HANDLE, int, PVOID, int, PULONG)>();
 
   int NtQuerySystemInformation(
     int SystemInformationClass,
-    ffi.Pointer<ffi.Void> SystemInformation,
+    PVOID SystemInformation,
     int SystemInformationLength,
-    ffi.Pointer<ffi.Uint32> ReturnLength,
+    PULONG ReturnLength,
   ) {
     return _NtQuerySystemInformation(
       SystemInformationClass,
@@ -344,29 +403,29 @@ class winternl {
     );
   }
 
-  late final _NtQuerySystemInformation_ptr =
-      _lookup<ffi.NativeFunction<_c_NtQuerySystemInformation>>(
+  late final _NtQuerySystemInformationPtr =
+      _lookup<ffi.NativeFunction<NativeNtQuerySystemInformation>>(
           'NtQuerySystemInformation');
-  late final _dart_NtQuerySystemInformation _NtQuerySystemInformation =
-      _NtQuerySystemInformation_ptr.asFunction<
-          _dart_NtQuerySystemInformation>();
+  late final _NtQuerySystemInformation =
+      _NtQuerySystemInformationPtr.asFunction<DartNtQuerySystemInformation>();
 
   int NtQuerySystemTime(
-    ffi.Pointer<LARGE_INTEGER> SystemTime,
+    PLARGE_INTEGER SystemTime,
   ) {
     return _NtQuerySystemTime(
       SystemTime,
     );
   }
 
-  late final _NtQuerySystemTime_ptr =
-      _lookup<ffi.NativeFunction<_c_NtQuerySystemTime>>('NtQuerySystemTime');
-  late final _dart_NtQuerySystemTime _NtQuerySystemTime =
-      _NtQuerySystemTime_ptr.asFunction<_dart_NtQuerySystemTime>();
+  late final _NtQuerySystemTimePtr =
+      _lookup<ffi.NativeFunction<NTSTATUS Function(PLARGE_INTEGER)>>(
+          'NtQuerySystemTime');
+  late final _NtQuerySystemTime =
+      _NtQuerySystemTimePtr.asFunction<int Function(PLARGE_INTEGER)>();
 
   int RtlLocalTimeToSystemTime(
-    ffi.Pointer<LARGE_INTEGER> LocalTime,
-    ffi.Pointer<LARGE_INTEGER> SystemTime,
+    PLARGE_INTEGER LocalTime,
+    PLARGE_INTEGER SystemTime,
   ) {
     return _RtlLocalTimeToSystemTime(
       LocalTime,
@@ -374,16 +433,16 @@ class winternl {
     );
   }
 
-  late final _RtlLocalTimeToSystemTime_ptr =
-      _lookup<ffi.NativeFunction<_c_RtlLocalTimeToSystemTime>>(
-          'RtlLocalTimeToSystemTime');
-  late final _dart_RtlLocalTimeToSystemTime _RtlLocalTimeToSystemTime =
-      _RtlLocalTimeToSystemTime_ptr.asFunction<
-          _dart_RtlLocalTimeToSystemTime>();
+  late final _RtlLocalTimeToSystemTimePtr = _lookup<
+      ffi.NativeFunction<
+          NTSTATUS Function(
+              PLARGE_INTEGER, PLARGE_INTEGER)>>('RtlLocalTimeToSystemTime');
+  late final _RtlLocalTimeToSystemTime = _RtlLocalTimeToSystemTimePtr
+      .asFunction<int Function(PLARGE_INTEGER, PLARGE_INTEGER)>();
 
   int RtlTimeToSecondsSince1970(
-    ffi.Pointer<LARGE_INTEGER> Time,
-    ffi.Pointer<ffi.Uint32> ElapsedSeconds,
+    PLARGE_INTEGER Time,
+    PULONG ElapsedSeconds,
   ) {
     return _RtlTimeToSecondsSince1970(
       Time,
@@ -391,56 +450,57 @@ class winternl {
     );
   }
 
-  late final _RtlTimeToSecondsSince1970_ptr =
-      _lookup<ffi.NativeFunction<_c_RtlTimeToSecondsSince1970>>(
+  late final _RtlTimeToSecondsSince1970Ptr =
+      _lookup<ffi.NativeFunction<BOOLEAN Function(PLARGE_INTEGER, PULONG)>>(
           'RtlTimeToSecondsSince1970');
-  late final _dart_RtlTimeToSecondsSince1970 _RtlTimeToSecondsSince1970 =
-      _RtlTimeToSecondsSince1970_ptr.asFunction<
-          _dart_RtlTimeToSecondsSince1970>();
+  late final _RtlTimeToSecondsSince1970 = _RtlTimeToSecondsSince1970Ptr
+      .asFunction<int Function(PLARGE_INTEGER, PULONG)>();
 
   void RtlFreeAnsiString(
-    ffi.Pointer<STRING> AnsiString,
+    PANSI_STRING AnsiString,
   ) {
     return _RtlFreeAnsiString(
       AnsiString,
     );
   }
 
-  late final _RtlFreeAnsiString_ptr =
-      _lookup<ffi.NativeFunction<_c_RtlFreeAnsiString>>('RtlFreeAnsiString');
-  late final _dart_RtlFreeAnsiString _RtlFreeAnsiString =
-      _RtlFreeAnsiString_ptr.asFunction<_dart_RtlFreeAnsiString>();
+  late final _RtlFreeAnsiStringPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(PANSI_STRING)>>(
+          'RtlFreeAnsiString');
+  late final _RtlFreeAnsiString =
+      _RtlFreeAnsiStringPtr.asFunction<void Function(PANSI_STRING)>();
 
   void RtlFreeUnicodeString(
-    ffi.Pointer<UNICODE_STRING> UnicodeString,
+    PUNICODE_STRING UnicodeString,
   ) {
     return _RtlFreeUnicodeString(
       UnicodeString,
     );
   }
 
-  late final _RtlFreeUnicodeString_ptr =
-      _lookup<ffi.NativeFunction<_c_RtlFreeUnicodeString>>(
+  late final _RtlFreeUnicodeStringPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(PUNICODE_STRING)>>(
           'RtlFreeUnicodeString');
-  late final _dart_RtlFreeUnicodeString _RtlFreeUnicodeString =
-      _RtlFreeUnicodeString_ptr.asFunction<_dart_RtlFreeUnicodeString>();
+  late final _RtlFreeUnicodeString =
+      _RtlFreeUnicodeStringPtr.asFunction<void Function(PUNICODE_STRING)>();
 
   void RtlFreeOemString(
-    ffi.Pointer<STRING> OemString,
+    POEM_STRING OemString,
   ) {
     return _RtlFreeOemString(
       OemString,
     );
   }
 
-  late final _RtlFreeOemString_ptr =
-      _lookup<ffi.NativeFunction<_c_RtlFreeOemString>>('RtlFreeOemString');
-  late final _dart_RtlFreeOemString _RtlFreeOemString =
-      _RtlFreeOemString_ptr.asFunction<_dart_RtlFreeOemString>();
+  late final _RtlFreeOemStringPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(POEM_STRING)>>(
+          'RtlFreeOemString');
+  late final _RtlFreeOemString =
+      _RtlFreeOemStringPtr.asFunction<void Function(POEM_STRING)>();
 
   void RtlInitString(
-    ffi.Pointer<STRING> DestinationString,
-    ffi.Pointer<ffi.Int8> SourceString,
+    PSTRING DestinationString,
+    PCSZ SourceString,
   ) {
     return _RtlInitString(
       DestinationString,
@@ -448,14 +508,15 @@ class winternl {
     );
   }
 
-  late final _RtlInitString_ptr =
-      _lookup<ffi.NativeFunction<_c_RtlInitString>>('RtlInitString');
-  late final _dart_RtlInitString _RtlInitString =
-      _RtlInitString_ptr.asFunction<_dart_RtlInitString>();
+  late final _RtlInitStringPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(PSTRING, PCSZ)>>(
+          'RtlInitString');
+  late final _RtlInitString =
+      _RtlInitStringPtr.asFunction<void Function(PSTRING, PCSZ)>();
 
   int RtlInitStringEx(
-    ffi.Pointer<STRING> DestinationString,
-    ffi.Pointer<ffi.Int8> SourceString,
+    PSTRING DestinationString,
+    PCSZ SourceString,
   ) {
     return _RtlInitStringEx(
       DestinationString,
@@ -463,14 +524,15 @@ class winternl {
     );
   }
 
-  late final _RtlInitStringEx_ptr =
-      _lookup<ffi.NativeFunction<_c_RtlInitStringEx>>('RtlInitStringEx');
-  late final _dart_RtlInitStringEx _RtlInitStringEx =
-      _RtlInitStringEx_ptr.asFunction<_dart_RtlInitStringEx>();
+  late final _RtlInitStringExPtr =
+      _lookup<ffi.NativeFunction<NTSTATUS Function(PSTRING, PCSZ)>>(
+          'RtlInitStringEx');
+  late final _RtlInitStringEx =
+      _RtlInitStringExPtr.asFunction<int Function(PSTRING, PCSZ)>();
 
   void RtlInitAnsiString(
-    ffi.Pointer<STRING> DestinationString,
-    ffi.Pointer<ffi.Int8> SourceString,
+    PANSI_STRING DestinationString,
+    PCSZ SourceString,
   ) {
     return _RtlInitAnsiString(
       DestinationString,
@@ -478,14 +540,15 @@ class winternl {
     );
   }
 
-  late final _RtlInitAnsiString_ptr =
-      _lookup<ffi.NativeFunction<_c_RtlInitAnsiString>>('RtlInitAnsiString');
-  late final _dart_RtlInitAnsiString _RtlInitAnsiString =
-      _RtlInitAnsiString_ptr.asFunction<_dart_RtlInitAnsiString>();
+  late final _RtlInitAnsiStringPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(PANSI_STRING, PCSZ)>>(
+          'RtlInitAnsiString');
+  late final _RtlInitAnsiString =
+      _RtlInitAnsiStringPtr.asFunction<void Function(PANSI_STRING, PCSZ)>();
 
   int RtlInitAnsiStringEx(
-    ffi.Pointer<STRING> DestinationString,
-    ffi.Pointer<ffi.Int8> SourceString,
+    PANSI_STRING DestinationString,
+    PCSZ SourceString,
   ) {
     return _RtlInitAnsiStringEx(
       DestinationString,
@@ -493,15 +556,15 @@ class winternl {
     );
   }
 
-  late final _RtlInitAnsiStringEx_ptr =
-      _lookup<ffi.NativeFunction<_c_RtlInitAnsiStringEx>>(
+  late final _RtlInitAnsiStringExPtr =
+      _lookup<ffi.NativeFunction<NTSTATUS Function(PANSI_STRING, PCSZ)>>(
           'RtlInitAnsiStringEx');
-  late final _dart_RtlInitAnsiStringEx _RtlInitAnsiStringEx =
-      _RtlInitAnsiStringEx_ptr.asFunction<_dart_RtlInitAnsiStringEx>();
+  late final _RtlInitAnsiStringEx =
+      _RtlInitAnsiStringExPtr.asFunction<int Function(PANSI_STRING, PCSZ)>();
 
   void RtlInitUnicodeString(
-    ffi.Pointer<UNICODE_STRING> DestinationString,
-    ffi.Pointer<ffi.Uint16> SourceString,
+    PUNICODE_STRING DestinationString,
+    PCWSTR SourceString,
   ) {
     return _RtlInitUnicodeString(
       DestinationString,
@@ -509,15 +572,15 @@ class winternl {
     );
   }
 
-  late final _RtlInitUnicodeString_ptr =
-      _lookup<ffi.NativeFunction<_c_RtlInitUnicodeString>>(
+  late final _RtlInitUnicodeStringPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(PUNICODE_STRING, PCWSTR)>>(
           'RtlInitUnicodeString');
-  late final _dart_RtlInitUnicodeString _RtlInitUnicodeString =
-      _RtlInitUnicodeString_ptr.asFunction<_dart_RtlInitUnicodeString>();
+  late final _RtlInitUnicodeString = _RtlInitUnicodeStringPtr.asFunction<
+      void Function(PUNICODE_STRING, PCWSTR)>();
 
   int RtlAnsiStringToUnicodeString(
-    ffi.Pointer<UNICODE_STRING> DestinationString,
-    ffi.Pointer<STRING> SourceString,
+    PUNICODE_STRING DestinationString,
+    PCANSI_STRING SourceString,
     int AllocateDestinationString,
   ) {
     return _RtlAnsiStringToUnicodeString(
@@ -527,16 +590,16 @@ class winternl {
     );
   }
 
-  late final _RtlAnsiStringToUnicodeString_ptr =
-      _lookup<ffi.NativeFunction<_c_RtlAnsiStringToUnicodeString>>(
-          'RtlAnsiStringToUnicodeString');
-  late final _dart_RtlAnsiStringToUnicodeString _RtlAnsiStringToUnicodeString =
-      _RtlAnsiStringToUnicodeString_ptr.asFunction<
-          _dart_RtlAnsiStringToUnicodeString>();
+  late final _RtlAnsiStringToUnicodeStringPtr = _lookup<
+      ffi.NativeFunction<
+          NTSTATUS Function(PUNICODE_STRING, PCANSI_STRING,
+              BOOLEAN)>>('RtlAnsiStringToUnicodeString');
+  late final _RtlAnsiStringToUnicodeString = _RtlAnsiStringToUnicodeStringPtr
+      .asFunction<int Function(PUNICODE_STRING, PCANSI_STRING, int)>();
 
   int RtlUnicodeStringToAnsiString(
-    ffi.Pointer<STRING> DestinationString,
-    ffi.Pointer<UNICODE_STRING> SourceString,
+    PANSI_STRING DestinationString,
+    PCUNICODE_STRING SourceString,
     int AllocateDestinationString,
   ) {
     return _RtlUnicodeStringToAnsiString(
@@ -546,16 +609,16 @@ class winternl {
     );
   }
 
-  late final _RtlUnicodeStringToAnsiString_ptr =
-      _lookup<ffi.NativeFunction<_c_RtlUnicodeStringToAnsiString>>(
-          'RtlUnicodeStringToAnsiString');
-  late final _dart_RtlUnicodeStringToAnsiString _RtlUnicodeStringToAnsiString =
-      _RtlUnicodeStringToAnsiString_ptr.asFunction<
-          _dart_RtlUnicodeStringToAnsiString>();
+  late final _RtlUnicodeStringToAnsiStringPtr = _lookup<
+      ffi.NativeFunction<
+          NTSTATUS Function(PANSI_STRING, PCUNICODE_STRING,
+              BOOLEAN)>>('RtlUnicodeStringToAnsiString');
+  late final _RtlUnicodeStringToAnsiString = _RtlUnicodeStringToAnsiStringPtr
+      .asFunction<int Function(PANSI_STRING, PCUNICODE_STRING, int)>();
 
   int RtlUnicodeStringToOemString(
-    ffi.Pointer<STRING> DestinationString,
-    ffi.Pointer<UNICODE_STRING> SourceString,
+    POEM_STRING DestinationString,
+    PCUNICODE_STRING SourceString,
     int AllocateDestinationString,
   ) {
     return _RtlUnicodeStringToOemString(
@@ -565,16 +628,16 @@ class winternl {
     );
   }
 
-  late final _RtlUnicodeStringToOemString_ptr =
-      _lookup<ffi.NativeFunction<_c_RtlUnicodeStringToOemString>>(
-          'RtlUnicodeStringToOemString');
-  late final _dart_RtlUnicodeStringToOemString _RtlUnicodeStringToOemString =
-      _RtlUnicodeStringToOemString_ptr.asFunction<
-          _dart_RtlUnicodeStringToOemString>();
+  late final _RtlUnicodeStringToOemStringPtr = _lookup<
+      ffi.NativeFunction<
+          NTSTATUS Function(POEM_STRING, PCUNICODE_STRING,
+              BOOLEAN)>>('RtlUnicodeStringToOemString');
+  late final _RtlUnicodeStringToOemString = _RtlUnicodeStringToOemStringPtr
+      .asFunction<int Function(POEM_STRING, PCUNICODE_STRING, int)>();
 
   int RtlUnicodeToMultiByteSize(
-    ffi.Pointer<ffi.Uint32> BytesInMultiByteString,
-    ffi.Pointer<ffi.Uint16> UnicodeString,
+    PULONG BytesInMultiByteString,
+    PWCH UnicodeString,
     int BytesInUnicodeString,
   ) {
     return _RtlUnicodeToMultiByteSize(
@@ -584,17 +647,16 @@ class winternl {
     );
   }
 
-  late final _RtlUnicodeToMultiByteSize_ptr =
-      _lookup<ffi.NativeFunction<_c_RtlUnicodeToMultiByteSize>>(
+  late final _RtlUnicodeToMultiByteSizePtr =
+      _lookup<ffi.NativeFunction<NTSTATUS Function(PULONG, PWCH, ULONG)>>(
           'RtlUnicodeToMultiByteSize');
-  late final _dart_RtlUnicodeToMultiByteSize _RtlUnicodeToMultiByteSize =
-      _RtlUnicodeToMultiByteSize_ptr.asFunction<
-          _dart_RtlUnicodeToMultiByteSize>();
+  late final _RtlUnicodeToMultiByteSize = _RtlUnicodeToMultiByteSizePtr
+      .asFunction<int Function(PULONG, PWCH, int)>();
 
   int RtlCharToInteger(
-    ffi.Pointer<ffi.Int8> String,
+    PCSZ String,
     int Base,
-    ffi.Pointer<ffi.Uint32> Value,
+    PULONG Value,
   ) {
     return _RtlCharToInteger(
       String,
@@ -603,14 +665,15 @@ class winternl {
     );
   }
 
-  late final _RtlCharToInteger_ptr =
-      _lookup<ffi.NativeFunction<_c_RtlCharToInteger>>('RtlCharToInteger');
-  late final _dart_RtlCharToInteger _RtlCharToInteger =
-      _RtlCharToInteger_ptr.asFunction<_dart_RtlCharToInteger>();
+  late final _RtlCharToIntegerPtr =
+      _lookup<ffi.NativeFunction<NTSTATUS Function(PCSZ, ULONG, PULONG)>>(
+          'RtlCharToInteger');
+  late final _RtlCharToInteger =
+      _RtlCharToIntegerPtr.asFunction<int Function(PCSZ, int, PULONG)>();
 
   int RtlConvertSidToUnicodeString(
-    ffi.Pointer<UNICODE_STRING> UnicodeString,
-    ffi.Pointer<ffi.Void> Sid,
+    PUNICODE_STRING UnicodeString,
+    PSID Sid,
     int AllocateDestinationString,
   ) {
     return _RtlConvertSidToUnicodeString(
@@ -620,241 +683,254 @@ class winternl {
     );
   }
 
-  late final _RtlConvertSidToUnicodeString_ptr =
-      _lookup<ffi.NativeFunction<_c_RtlConvertSidToUnicodeString>>(
-          'RtlConvertSidToUnicodeString');
-  late final _dart_RtlConvertSidToUnicodeString _RtlConvertSidToUnicodeString =
-      _RtlConvertSidToUnicodeString_ptr.asFunction<
-          _dart_RtlConvertSidToUnicodeString>();
+  late final _RtlConvertSidToUnicodeStringPtr = _lookup<
+      ffi.NativeFunction<
+          NTSTATUS Function(
+              PUNICODE_STRING, PSID, BOOLEAN)>>('RtlConvertSidToUnicodeString');
+  late final _RtlConvertSidToUnicodeString = _RtlConvertSidToUnicodeStringPtr
+      .asFunction<int Function(PUNICODE_STRING, PSID, int)>();
 
   int RtlUniform(
-    ffi.Pointer<ffi.Uint32> Seed,
+    PULONG Seed,
   ) {
     return _RtlUniform(
       Seed,
     );
   }
 
-  late final _RtlUniform_ptr =
-      _lookup<ffi.NativeFunction<_c_RtlUniform>>('RtlUniform');
-  late final _dart_RtlUniform _RtlUniform =
-      _RtlUniform_ptr.asFunction<_dart_RtlUniform>();
+  late final _RtlUniformPtr =
+      _lookup<ffi.NativeFunction<ULONG Function(PULONG)>>('RtlUniform');
+  late final _RtlUniform = _RtlUniformPtr.asFunction<int Function(PULONG)>();
 }
 
-class STRING extends ffi.Struct {
-  @ffi.Uint16()
+class _STRING extends ffi.Struct {
+  @USHORT()
   external int Length;
 
-  @ffi.Uint16()
+  @USHORT()
   external int MaximumLength;
 
-  external ffi.Pointer<ffi.Int8> Buffer;
+  external PCHAR Buffer;
 }
 
-class UNICODE_STRING extends ffi.Struct {
-  @ffi.Uint16()
+typedef USHORT = ffi.Uint16;
+typedef PCHAR = ffi.Pointer<CHAR>;
+typedef CHAR = ffi.Int8;
+
+class _UNICODE_STRING extends ffi.Struct {
+  @USHORT()
   external int Length;
 
-  @ffi.Uint16()
+  @USHORT()
   external int MaximumLength;
 
-  external ffi.Pointer<ffi.Uint16> Buffer;
+  external PWSTR Buffer;
 }
 
-class CLIENT_ID extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> UniqueProcess;
+typedef PWSTR = ffi.Pointer<WCHAR>;
+typedef WCHAR = wchar_t;
+typedef wchar_t = ffi.Uint16;
 
-  external ffi.Pointer<ffi.Void> UniqueThread;
+class _CLIENT_ID extends ffi.Struct {
+  external HANDLE UniqueProcess;
+
+  external HANDLE UniqueThread;
 }
 
-class LIST_ENTRY extends ffi.Struct {
-  external ffi.Pointer<LIST_ENTRY> Flink;
+typedef HANDLE = ffi.Pointer<ffi.Void>;
 
-  external ffi.Pointer<LIST_ENTRY> Blink;
-}
-
-class PEB_LDR_DATA extends ffi.Struct {
+class _PEB_LDR_DATA extends ffi.Struct {
   @ffi.Array.multi([8])
-  external ffi.Array<ffi.Uint8> Reserved1;
+  external ffi.Array<BYTE> Reserved1;
 
   @ffi.Array.multi([3])
-  external ffi.Array<ffi.Pointer<ffi.Void>> Reserved2;
+  external ffi.Array<PVOID> Reserved2;
 
   external LIST_ENTRY InMemoryOrderModuleList;
 }
 
-class LDR_DATA_TABLE_ENTRY extends ffi.Struct {
+typedef BYTE = ffi.Uint8;
+typedef PVOID = ffi.Pointer<ffi.Void>;
+typedef LIST_ENTRY = _LIST_ENTRY;
+
+class _LIST_ENTRY extends ffi.Struct {
+  external ffi.Pointer<_LIST_ENTRY> Flink;
+
+  external ffi.Pointer<_LIST_ENTRY> Blink;
+}
+
+class _LDR_DATA_TABLE_ENTRY extends ffi.Struct {
   @ffi.Array.multi([2])
-  external ffi.Array<ffi.Pointer<ffi.Void>> Reserved1;
+  external ffi.Array<PVOID> Reserved1;
 
   external LIST_ENTRY InMemoryOrderLinks;
 
   @ffi.Array.multi([2])
-  external ffi.Array<ffi.Pointer<ffi.Void>> Reserved2;
+  external ffi.Array<PVOID> Reserved2;
 
-  external ffi.Pointer<ffi.Void> DllBase;
+  external PVOID DllBase;
 
   @ffi.Array.multi([2])
-  external ffi.Array<ffi.Pointer<ffi.Void>> Reserved3;
+  external ffi.Array<PVOID> Reserved3;
 
   external UNICODE_STRING FullDllName;
 
   @ffi.Array.multi([8])
-  external ffi.Array<ffi.Uint8> Reserved4;
+  external ffi.Array<BYTE> Reserved4;
 
   @ffi.Array.multi([3])
-  external ffi.Array<ffi.Pointer<ffi.Void>> Reserved5;
+  external ffi.Array<PVOID> Reserved5;
 
-  @ffi.Uint32()
+  @ULONG()
   external int TimeDateStamp;
 }
 
-class RTL_USER_PROCESS_PARAMETERS extends ffi.Struct {
+typedef UNICODE_STRING = _UNICODE_STRING;
+typedef ULONG = DWORD;
+typedef DWORD = ffi.Uint32;
+
+class _RTL_USER_PROCESS_PARAMETERS extends ffi.Struct {
   @ffi.Array.multi([16])
-  external ffi.Array<ffi.Uint8> Reserved1;
+  external ffi.Array<BYTE> Reserved1;
 
   @ffi.Array.multi([10])
-  external ffi.Array<ffi.Pointer<ffi.Void>> Reserved2;
+  external ffi.Array<PVOID> Reserved2;
 
   external UNICODE_STRING ImagePathName;
 
   external UNICODE_STRING CommandLine;
 }
 
-class PEB extends ffi.Struct {
+class _PEB extends ffi.Struct {
   @ffi.Array.multi([2])
-  external ffi.Array<ffi.Uint8> Reserved1;
+  external ffi.Array<BYTE> Reserved1;
 
-  @ffi.Uint8()
+  @BYTE()
   external int BeingDebugged;
 
   @ffi.Array.multi([1])
-  external ffi.Array<ffi.Uint8> Reserved2;
+  external ffi.Array<BYTE> Reserved2;
 
   @ffi.Array.multi([2])
-  external ffi.Array<ffi.Pointer<ffi.Void>> Reserved3;
+  external ffi.Array<PVOID> Reserved3;
 
-  external ffi.Pointer<PEB_LDR_DATA> Ldr;
+  external PPEB_LDR_DATA Ldr;
 
-  external ffi.Pointer<RTL_USER_PROCESS_PARAMETERS> ProcessParameters;
+  external PRTL_USER_PROCESS_PARAMETERS ProcessParameters;
 
   @ffi.Array.multi([3])
-  external ffi.Array<ffi.Pointer<ffi.Void>> Reserved4;
+  external ffi.Array<PVOID> Reserved4;
 
-  external ffi.Pointer<ffi.Void> AtlThunkSListPtr;
+  external PVOID AtlThunkSListPtr;
 
-  external ffi.Pointer<ffi.Void> Reserved5;
+  external PVOID Reserved5;
 
-  @ffi.Uint32()
+  @ULONG()
   external int Reserved6;
 
-  external ffi.Pointer<ffi.Void> Reserved7;
+  external PVOID Reserved7;
 
-  @ffi.Uint32()
+  @ULONG()
   external int Reserved8;
 
-  @ffi.Uint32()
+  @ULONG()
   external int AtlThunkSListPtr32;
 
   @ffi.Array.multi([45])
-  external ffi.Array<ffi.Pointer<ffi.Void>> Reserved9;
+  external ffi.Array<PVOID> Reserved9;
 
   @ffi.Array.multi([96])
-  external ffi.Array<ffi.Uint8> Reserved10;
+  external ffi.Array<BYTE> Reserved10;
 
-  external ffi.Pointer<ffi.NativeFunction<PPS_POST_PROCESS_INIT_ROUTINE>>
-      PostProcessInitRoutine;
+  external PPS_POST_PROCESS_INIT_ROUTINE PostProcessInitRoutine;
 
   @ffi.Array.multi([128])
-  external ffi.Array<ffi.Uint8> Reserved11;
+  external ffi.Array<BYTE> Reserved11;
 
   @ffi.Array.multi([1])
-  external ffi.Array<ffi.Pointer<ffi.Void>> Reserved12;
+  external ffi.Array<PVOID> Reserved12;
 
-  @ffi.Uint32()
+  @ULONG()
   external int SessionId;
 }
 
-class TEB extends ffi.Struct {
-  @ffi.Array.multi([12])
-  external ffi.Array<ffi.Pointer<ffi.Void>> Reserved1;
+typedef PPEB_LDR_DATA = ffi.Pointer<_PEB_LDR_DATA>;
+typedef PRTL_USER_PROCESS_PARAMETERS
+    = ffi.Pointer<_RTL_USER_PROCESS_PARAMETERS>;
+typedef PPS_POST_PROCESS_INIT_ROUTINE
+    = ffi.Pointer<ffi.NativeFunction<ffi.Void Function()>>;
 
-  external ffi.Pointer<PEB> ProcessEnvironmentBlock;
+class _TEB extends ffi.Struct {
+  @ffi.Array.multi([12])
+  external ffi.Array<PVOID> Reserved1;
+
+  external PPEB ProcessEnvironmentBlock;
 
   @ffi.Array.multi([399])
-  external ffi.Array<ffi.Pointer<ffi.Void>> Reserved2;
+  external ffi.Array<PVOID> Reserved2;
 
   @ffi.Array.multi([1952])
-  external ffi.Array<ffi.Uint8> Reserved3;
+  external ffi.Array<BYTE> Reserved3;
 
   @ffi.Array.multi([64])
-  external ffi.Array<ffi.Pointer<ffi.Void>> TlsSlots;
+  external ffi.Array<PVOID> TlsSlots;
 
   @ffi.Array.multi([8])
-  external ffi.Array<ffi.Uint8> Reserved4;
+  external ffi.Array<BYTE> Reserved4;
 
   @ffi.Array.multi([26])
-  external ffi.Array<ffi.Pointer<ffi.Void>> Reserved5;
+  external ffi.Array<PVOID> Reserved5;
 
-  external ffi.Pointer<ffi.Void> ReservedForOle;
+  external PVOID ReservedForOle;
 
   @ffi.Array.multi([4])
-  external ffi.Array<ffi.Pointer<ffi.Void>> Reserved6;
+  external ffi.Array<PVOID> Reserved6;
 
-  external ffi.Pointer<ffi.Void> TlsExpansionSlots;
+  external PVOID TlsExpansionSlots;
 }
 
-class OBJECT_ATTRIBUTES extends ffi.Struct {
-  @ffi.Uint32()
+typedef PPEB = ffi.Pointer<_PEB>;
+
+class _OBJECT_ATTRIBUTES extends ffi.Struct {
+  @ULONG()
   external int Length;
 
-  external ffi.Pointer<ffi.Void> RootDirectory;
+  external HANDLE RootDirectory;
 
-  external ffi.Pointer<UNICODE_STRING> ObjectName;
+  external PUNICODE_STRING ObjectName;
 
-  @ffi.Uint32()
+  @ULONG()
   external int Attributes;
 
-  external ffi.Pointer<ffi.Void> SecurityDescriptor;
+  external PVOID SecurityDescriptor;
 
-  external ffi.Pointer<ffi.Void> SecurityQualityOfService;
+  external PVOID SecurityQualityOfService;
 }
 
-class IO_STATUS_BLOCK extends ffi.Struct {
-  @ffi.Uint64()
+typedef PUNICODE_STRING = ffi.Pointer<UNICODE_STRING>;
+
+class _IO_STATUS_BLOCK extends ffi.Struct {
+  @ULONG_PTR()
   external int Information;
 }
 
-class PROCESS_BASIC_INFORMATION extends ffi.Struct {
-  external ffi.Pointer<ffi.Void> Reserved1;
+typedef ULONG_PTR = ffi.Uint64;
 
-  external ffi.Pointer<PEB> PebBaseAddress;
+class _PROCESS_BASIC_INFORMATION extends ffi.Struct {
+  external PVOID Reserved1;
+
+  external PPEB PebBaseAddress;
 
   @ffi.Array.multi([2])
-  external ffi.Array<ffi.Pointer<ffi.Void>> Reserved2;
+  external ffi.Array<PVOID> Reserved2;
 
-  @ffi.Uint64()
+  @ULONG_PTR()
   external int UniqueProcessId;
 
-  external ffi.Pointer<ffi.Void> Reserved3;
+  external PVOID Reserved3;
 }
 
-class unnamedStruct_1 extends ffi.Struct {
-  @ffi.Uint32()
-  external int LowPart;
-
-  @ffi.Int32()
-  external int HighPart;
-}
-
-class LARGE_INTEGER extends ffi.Union {
-  external unnamedStruct_1 u;
-
-  @ffi.Int64()
-  external int QuadPart;
-}
-
-class SYSTEM_PROCESSOR_PERFORMANCE_INFORMATION extends ffi.Struct {
+class _SYSTEM_PROCESSOR_PERFORMANCE_INFORMATION extends ffi.Struct {
   external LARGE_INTEGER IdleTime;
 
   external LARGE_INTEGER KernelTime;
@@ -864,161 +940,188 @@ class SYSTEM_PROCESSOR_PERFORMANCE_INFORMATION extends ffi.Struct {
   @ffi.Array.multi([2])
   external ffi.Array<LARGE_INTEGER> Reserved1;
 
-  @ffi.Uint32()
+  @ULONG()
   external int Reserved2;
 }
 
-class SYSTEM_PROCESS_INFORMATION extends ffi.Struct {
-  @ffi.Uint32()
+typedef LARGE_INTEGER = _LARGE_INTEGER;
+
+class _LARGE_INTEGER extends ffi.Union {
+  external UnnamedStruct1 u;
+
+  @LONGLONG()
+  external int QuadPart;
+}
+
+class UnnamedStruct1 extends ffi.Struct {
+  @DWORD()
+  external int LowPart;
+
+  @LONG()
+  external int HighPart;
+}
+
+typedef LONG = ffi.Int32;
+typedef LONGLONG = ffi.Int64;
+
+class _SYSTEM_PROCESS_INFORMATION extends ffi.Struct {
+  @ULONG()
   external int NextEntryOffset;
 
-  @ffi.Uint32()
+  @ULONG()
   external int NumberOfThreads;
 
   @ffi.Array.multi([48])
-  external ffi.Array<ffi.Uint8> Reserved1;
+  external ffi.Array<BYTE> Reserved1;
 
   external UNICODE_STRING ImageName;
 
-  @ffi.Int32()
+  @KPRIORITY()
   external int BasePriority;
 
-  external ffi.Pointer<ffi.Void> UniqueProcessId;
+  external HANDLE UniqueProcessId;
 
-  external ffi.Pointer<ffi.Void> Reserved2;
+  external PVOID Reserved2;
 
-  @ffi.Uint32()
+  @ULONG()
   external int HandleCount;
 
-  @ffi.Uint32()
+  @ULONG()
   external int SessionId;
 
-  external ffi.Pointer<ffi.Void> Reserved3;
+  external PVOID Reserved3;
 
-  @ffi.Uint64()
+  @SIZE_T()
   external int PeakVirtualSize;
 
-  @ffi.Uint64()
+  @SIZE_T()
   external int VirtualSize;
 
-  @ffi.Uint32()
+  @ULONG()
   external int Reserved4;
 
-  @ffi.Uint64()
+  @SIZE_T()
   external int PeakWorkingSetSize;
 
-  @ffi.Uint64()
+  @SIZE_T()
   external int WorkingSetSize;
 
-  external ffi.Pointer<ffi.Void> Reserved5;
+  external PVOID Reserved5;
 
-  @ffi.Uint64()
+  @SIZE_T()
   external int QuotaPagedPoolUsage;
 
-  external ffi.Pointer<ffi.Void> Reserved6;
+  external PVOID Reserved6;
 
-  @ffi.Uint64()
+  @SIZE_T()
   external int QuotaNonPagedPoolUsage;
 
-  @ffi.Uint64()
+  @SIZE_T()
   external int PagefileUsage;
 
-  @ffi.Uint64()
+  @SIZE_T()
   external int PeakPagefileUsage;
 
-  @ffi.Uint64()
+  @SIZE_T()
   external int PrivatePageCount;
 
   @ffi.Array.multi([6])
   external ffi.Array<LARGE_INTEGER> Reserved7;
 }
 
-class SYSTEM_THREAD_INFORMATION extends ffi.Struct {
+typedef KPRIORITY = LONG;
+typedef SIZE_T = ULONG_PTR;
+
+class _SYSTEM_THREAD_INFORMATION extends ffi.Struct {
   @ffi.Array.multi([3])
   external ffi.Array<LARGE_INTEGER> Reserved1;
 
-  @ffi.Uint32()
+  @ULONG()
   external int Reserved2;
 
-  external ffi.Pointer<ffi.Void> StartAddress;
+  external PVOID StartAddress;
 
   external CLIENT_ID ClientId;
 
-  @ffi.Int32()
+  @KPRIORITY()
   external int Priority;
 
-  @ffi.Int32()
+  @LONG()
   external int BasePriority;
 
-  @ffi.Uint32()
+  @ULONG()
   external int Reserved3;
 
-  @ffi.Uint32()
+  @ULONG()
   external int ThreadState;
 
-  @ffi.Uint32()
+  @ULONG()
   external int WaitReason;
 }
 
-class SYSTEM_REGISTRY_QUOTA_INFORMATION extends ffi.Struct {
-  @ffi.Uint32()
+typedef CLIENT_ID = _CLIENT_ID;
+
+class _SYSTEM_REGISTRY_QUOTA_INFORMATION extends ffi.Struct {
+  @ULONG()
   external int RegistryQuotaAllowed;
 
-  @ffi.Uint32()
+  @ULONG()
   external int RegistryQuotaUsed;
 
-  external ffi.Pointer<ffi.Void> Reserved1;
+  external PVOID Reserved1;
 }
 
-class SYSTEM_BASIC_INFORMATION extends ffi.Struct {
+class _SYSTEM_BASIC_INFORMATION extends ffi.Struct {
   @ffi.Array.multi([24])
-  external ffi.Array<ffi.Uint8> Reserved1;
+  external ffi.Array<BYTE> Reserved1;
 
   @ffi.Array.multi([4])
-  external ffi.Array<ffi.Pointer<ffi.Void>> Reserved2;
+  external ffi.Array<PVOID> Reserved2;
 
-  @ffi.Int8()
+  @CCHAR()
   external int NumberOfProcessors;
 }
 
-class SYSTEM_TIMEOFDAY_INFORMATION extends ffi.Struct {
+typedef CCHAR = ffi.Int8;
+
+class _SYSTEM_TIMEOFDAY_INFORMATION extends ffi.Struct {
   @ffi.Array.multi([48])
-  external ffi.Array<ffi.Uint8> Reserved1;
+  external ffi.Array<BYTE> Reserved1;
 }
 
-class SYSTEM_PERFORMANCE_INFORMATION extends ffi.Struct {
+class _SYSTEM_PERFORMANCE_INFORMATION extends ffi.Struct {
   @ffi.Array.multi([312])
-  external ffi.Array<ffi.Uint8> Reserved1;
+  external ffi.Array<BYTE> Reserved1;
 }
 
-class SYSTEM_EXCEPTION_INFORMATION extends ffi.Struct {
+class _SYSTEM_EXCEPTION_INFORMATION extends ffi.Struct {
   @ffi.Array.multi([16])
-  external ffi.Array<ffi.Uint8> Reserved1;
+  external ffi.Array<BYTE> Reserved1;
 }
 
-class SYSTEM_LOOKASIDE_INFORMATION extends ffi.Struct {
+class _SYSTEM_LOOKASIDE_INFORMATION extends ffi.Struct {
   @ffi.Array.multi([32])
-  external ffi.Array<ffi.Uint8> Reserved1;
+  external ffi.Array<BYTE> Reserved1;
 }
 
-class SYSTEM_INTERRUPT_INFORMATION extends ffi.Struct {
+class _SYSTEM_INTERRUPT_INFORMATION extends ffi.Struct {
   @ffi.Array.multi([24])
-  external ffi.Array<ffi.Uint8> Reserved1;
+  external ffi.Array<BYTE> Reserved1;
 }
 
-class SYSTEM_POLICY_INFORMATION extends ffi.Struct {
+class _SYSTEM_POLICY_INFORMATION extends ffi.Struct {
   @ffi.Array.multi([2])
-  external ffi.Array<ffi.Pointer<ffi.Void>> Reserved1;
+  external ffi.Array<PVOID> Reserved1;
 
   @ffi.Array.multi([3])
-  external ffi.Array<ffi.Uint32> Reserved2;
+  external ffi.Array<ULONG> Reserved2;
 }
 
-abstract class FILE_INFORMATION_CLASS {
+abstract class _FILE_INFORMATION_CLASS {
   static const int FileDirectoryInformation = 1;
 }
 
-abstract class PROCESSINFOCLASS {
+abstract class _PROCESSINFOCLASS {
   static const int ProcessBasicInformation = 0;
   static const int ProcessDebugPort = 7;
   static const int ProcessWow64Information = 26;
@@ -1026,19 +1129,19 @@ abstract class PROCESSINFOCLASS {
   static const int ProcessBreakOnTermination = 29;
 }
 
-abstract class THREADINFOCLASS {
+abstract class _THREADINFOCLASS {
   static const int ThreadIsIoPending = 16;
 }
 
-class SYSTEM_CODEINTEGRITY_INFORMATION extends ffi.Struct {
-  @ffi.Uint32()
+class _SYSTEM_CODEINTEGRITY_INFORMATION extends ffi.Struct {
+  @ULONG()
   external int Length;
 
-  @ffi.Uint32()
+  @ULONG()
   external int CodeIntegrityOptions;
 }
 
-abstract class SYSTEM_INFORMATION_CLASS {
+abstract class _SYSTEM_INFORMATION_CLASS {
   static const int SystemBasicInformation = 0;
   static const int SystemPerformanceInformation = 2;
   static const int SystemTimeOfDayInformation = 3;
@@ -1052,49 +1155,65 @@ abstract class SYSTEM_INFORMATION_CLASS {
   static const int SystemPolicyInformation = 134;
 }
 
-abstract class OBJECT_INFORMATION_CLASS {
+abstract class _OBJECT_INFORMATION_CLASS {
   static const int ObjectBasicInformation = 0;
   static const int ObjectTypeInformation = 2;
 }
 
-class PUBLIC_OBJECT_BASIC_INFORMATION extends ffi.Struct {
-  @ffi.Uint32()
+class _PUBLIC_OBJECT_BASIC_INFORMATION extends ffi.Struct {
+  @ULONG()
   external int Attributes;
 
-  @ffi.Uint32()
+  @ACCESS_MASK()
   external int GrantedAccess;
 
-  @ffi.Uint32()
+  @ULONG()
   external int HandleCount;
 
-  @ffi.Uint32()
+  @ULONG()
   external int PointerCount;
 
   @ffi.Array.multi([10])
-  external ffi.Array<ffi.Uint32> Reserved;
+  external ffi.Array<ULONG> Reserved;
 }
 
-class PUBLIC_OBJECT_TYPE_INFORMATION extends ffi.Struct {
+typedef ACCESS_MASK = DWORD;
+
+class __PUBLIC_OBJECT_TYPE_INFORMATION extends ffi.Struct {
   external UNICODE_STRING TypeName;
 
   @ffi.Array.multi([22])
-  external ffi.Array<ffi.Uint32> Reserved;
+  external ffi.Array<ULONG> Reserved;
 }
 
-class KEY_VALUE_ENTRY extends ffi.Struct {
-  external ffi.Pointer<UNICODE_STRING> ValueName;
+typedef NTSTATUS = LONG;
+typedef PHANDLE = ffi.Pointer<HANDLE>;
+typedef POBJECT_ATTRIBUTES = ffi.Pointer<OBJECT_ATTRIBUTES>;
+typedef OBJECT_ATTRIBUTES = _OBJECT_ATTRIBUTES;
+typedef PIO_STATUS_BLOCK = ffi.Pointer<_IO_STATUS_BLOCK>;
+typedef PLARGE_INTEGER = ffi.Pointer<LARGE_INTEGER>;
+typedef PIO_APC_ROUTINE = ffi.Pointer<
+    ffi.NativeFunction<ffi.Void Function(PVOID, PIO_STATUS_BLOCK, ULONG)>>;
+typedef BOOLEAN = boolean;
+typedef boolean = ffi.Uint8;
 
-  @ffi.Uint32()
+class _KEY_VALUE_ENTRY extends ffi.Struct {
+  external PUNICODE_STRING ValueName;
+
+  @ULONG()
   external int DataLength;
 
-  @ffi.Uint32()
+  @ULONG()
   external int DataOffset;
 
-  @ffi.Uint32()
+  @ULONG()
   external int Type;
 }
 
-abstract class KEY_SET_INFORMATION_CLASS {
+typedef PKEY_VALUE_ENTRY = ffi.Pointer<_KEY_VALUE_ENTRY>;
+typedef PULONG = ffi.Pointer<ULONG>;
+
+abstract class _KEY_SET_INFORMATION_CLASS {
   static const int KeyWriteTimeInformation = 0;
   static const int KeyWow64FlagsInformation = 1;
   static const int KeyControlFlagsInformation = 2;
@@ -1104,19 +1223,38 @@ abstract class KEY_SET_INFORMATION_CLASS {
   static const int MaxKeySetInfoClass = 6;
 }
 
-abstract class WINSTATIONINFOCLASS {
+typedef POEM_STRING = PSTRING;
+typedef PSTRING = ffi.Pointer<STRING>;
+typedef STRING = _STRING;
+typedef PBOOLEAN = ffi.Pointer<BOOLEAN>;
+typedef NativeNtQuerySystemInformation = NTSTATUS Function(
+    ffi.Int32 SystemInformationClass,
+    PVOID SystemInformation,
+    ULONG SystemInformationLength,
+    PULONG ReturnLength);
+typedef DartNtQuerySystemInformation = int Function(int SystemInformationClass,
+    PVOID SystemInformation, int SystemInformationLength, PULONG ReturnLength);
+typedef PANSI_STRING = PSTRING;
+typedef PCSZ = ffi.Pointer<ffi.Int8>;
+typedef PCWSTR = ffi.Pointer<WCHAR>;
+typedef PCANSI_STRING = PSTRING;
+typedef PCUNICODE_STRING = ffi.Pointer<UNICODE_STRING>;
+typedef PWCH = ffi.Pointer<WCHAR>;
+typedef PSID = PVOID;
+
+abstract class _WINSTATIONINFOCLASS {
   static const int WinStationInformation = 8;
 }
 
-class WINSTATIONINFORMATIONW extends ffi.Struct {
+class _WINSTATIONINFORMATIONW extends ffi.Struct {
   @ffi.Array.multi([70])
-  external ffi.Array<ffi.Uint8> Reserved2;
+  external ffi.Array<BYTE> Reserved2;
 
-  @ffi.Uint32()
+  @ULONG()
   external int LogonId;
 
   @ffi.Array.multi([1140])
-  external ffi.Array<ffi.Uint8> Reserved3;
+  external ffi.Array<BYTE> Reserved3;
 }
 
 const int CODEINTEGRITY_OPTION_ENABLED = 1;
@@ -1246,439 +1384,3 @@ const int FILE_OVERWRITTEN = 3;
 const int FILE_EXISTS = 4;
 
 const int FILE_DOES_NOT_EXIST = 5;
-
-typedef _c_NtClose = ffi.Int32 Function(
-  ffi.Pointer<ffi.Void> Handle,
-);
-
-typedef _dart_NtClose = int Function(
-  ffi.Pointer<ffi.Void> Handle,
-);
-
-typedef _c_NtCreateFile = ffi.Int32 Function(
-  ffi.Pointer<ffi.Pointer<ffi.Void>> FileHandle,
-  ffi.Uint32 DesiredAccess,
-  ffi.Pointer<OBJECT_ATTRIBUTES> ObjectAttributes,
-  ffi.Pointer<IO_STATUS_BLOCK> IoStatusBlock,
-  ffi.Pointer<LARGE_INTEGER> AllocationSize,
-  ffi.Uint32 FileAttributes,
-  ffi.Uint32 ShareAccess,
-  ffi.Uint32 CreateDisposition,
-  ffi.Uint32 CreateOptions,
-  ffi.Pointer<ffi.Void> EaBuffer,
-  ffi.Uint32 EaLength,
-);
-
-typedef _dart_NtCreateFile = int Function(
-  ffi.Pointer<ffi.Pointer<ffi.Void>> FileHandle,
-  int DesiredAccess,
-  ffi.Pointer<OBJECT_ATTRIBUTES> ObjectAttributes,
-  ffi.Pointer<IO_STATUS_BLOCK> IoStatusBlock,
-  ffi.Pointer<LARGE_INTEGER> AllocationSize,
-  int FileAttributes,
-  int ShareAccess,
-  int CreateDisposition,
-  int CreateOptions,
-  ffi.Pointer<ffi.Void> EaBuffer,
-  int EaLength,
-);
-
-typedef _c_NtOpenFile = ffi.Int32 Function(
-  ffi.Pointer<ffi.Pointer<ffi.Void>> FileHandle,
-  ffi.Uint32 DesiredAccess,
-  ffi.Pointer<OBJECT_ATTRIBUTES> ObjectAttributes,
-  ffi.Pointer<IO_STATUS_BLOCK> IoStatusBlock,
-  ffi.Uint32 ShareAccess,
-  ffi.Uint32 OpenOptions,
-);
-
-typedef _dart_NtOpenFile = int Function(
-  ffi.Pointer<ffi.Pointer<ffi.Void>> FileHandle,
-  int DesiredAccess,
-  ffi.Pointer<OBJECT_ATTRIBUTES> ObjectAttributes,
-  ffi.Pointer<IO_STATUS_BLOCK> IoStatusBlock,
-  int ShareAccess,
-  int OpenOptions,
-);
-
-typedef _c_NtRenameKey = ffi.Int32 Function(
-  ffi.Pointer<ffi.Void> KeyHandle,
-  ffi.Pointer<UNICODE_STRING> NewName,
-);
-
-typedef _dart_NtRenameKey = int Function(
-  ffi.Pointer<ffi.Void> KeyHandle,
-  ffi.Pointer<UNICODE_STRING> NewName,
-);
-
-typedef PIO_APC_ROUTINE = ffi.Void Function(
-  ffi.Pointer<ffi.Void>,
-  ffi.Pointer<IO_STATUS_BLOCK>,
-  ffi.Uint32,
-);
-
-typedef _c_NtNotifyChangeMultipleKeys = ffi.Int32 Function(
-  ffi.Pointer<ffi.Void> MasterKeyHandle,
-  ffi.Uint32 Count,
-  ffi.Pointer<OBJECT_ATTRIBUTES> SubordinateObjects,
-  ffi.Pointer<ffi.Void> Event,
-  ffi.Pointer<ffi.NativeFunction<PIO_APC_ROUTINE>> ApcRoutine,
-  ffi.Pointer<ffi.Void> ApcContext,
-  ffi.Pointer<IO_STATUS_BLOCK> IoStatusBlock,
-  ffi.Uint32 CompletionFilter,
-  ffi.Uint8 WatchTree,
-  ffi.Pointer<ffi.Void> Buffer,
-  ffi.Uint32 BufferSize,
-  ffi.Uint8 Asynchronous,
-);
-
-typedef _dart_NtNotifyChangeMultipleKeys = int Function(
-  ffi.Pointer<ffi.Void> MasterKeyHandle,
-  int Count,
-  ffi.Pointer<OBJECT_ATTRIBUTES> SubordinateObjects,
-  ffi.Pointer<ffi.Void> Event,
-  ffi.Pointer<ffi.NativeFunction<PIO_APC_ROUTINE>> ApcRoutine,
-  ffi.Pointer<ffi.Void> ApcContext,
-  ffi.Pointer<IO_STATUS_BLOCK> IoStatusBlock,
-  int CompletionFilter,
-  int WatchTree,
-  ffi.Pointer<ffi.Void> Buffer,
-  int BufferSize,
-  int Asynchronous,
-);
-
-typedef _c_NtQueryMultipleValueKey = ffi.Int32 Function(
-  ffi.Pointer<ffi.Void> KeyHandle,
-  ffi.Pointer<KEY_VALUE_ENTRY> ValueEntries,
-  ffi.Uint32 EntryCount,
-  ffi.Pointer<ffi.Void> ValueBuffer,
-  ffi.Pointer<ffi.Uint32> BufferLength,
-  ffi.Pointer<ffi.Uint32> RequiredBufferLength,
-);
-
-typedef _dart_NtQueryMultipleValueKey = int Function(
-  ffi.Pointer<ffi.Void> KeyHandle,
-  ffi.Pointer<KEY_VALUE_ENTRY> ValueEntries,
-  int EntryCount,
-  ffi.Pointer<ffi.Void> ValueBuffer,
-  ffi.Pointer<ffi.Uint32> BufferLength,
-  ffi.Pointer<ffi.Uint32> RequiredBufferLength,
-);
-
-typedef _c_NtSetInformationKey = ffi.Int32 Function(
-  ffi.Pointer<ffi.Void> KeyHandle,
-  ffi.Int32 KeySetInformationClass,
-  ffi.Pointer<ffi.Void> KeySetInformation,
-  ffi.Uint32 KeySetInformationLength,
-);
-
-typedef _dart_NtSetInformationKey = int Function(
-  ffi.Pointer<ffi.Void> KeyHandle,
-  int KeySetInformationClass,
-  ffi.Pointer<ffi.Void> KeySetInformation,
-  int KeySetInformationLength,
-);
-
-typedef _c_NtDeviceIoControlFile = ffi.Int32 Function(
-  ffi.Pointer<ffi.Void> FileHandle,
-  ffi.Pointer<ffi.Void> Event,
-  ffi.Pointer<ffi.NativeFunction<PIO_APC_ROUTINE>> ApcRoutine,
-  ffi.Pointer<ffi.Void> ApcContext,
-  ffi.Pointer<IO_STATUS_BLOCK> IoStatusBlock,
-  ffi.Uint32 IoControlCode,
-  ffi.Pointer<ffi.Void> InputBuffer,
-  ffi.Uint32 InputBufferLength,
-  ffi.Pointer<ffi.Void> OutputBuffer,
-  ffi.Uint32 OutputBufferLength,
-);
-
-typedef _dart_NtDeviceIoControlFile = int Function(
-  ffi.Pointer<ffi.Void> FileHandle,
-  ffi.Pointer<ffi.Void> Event,
-  ffi.Pointer<ffi.NativeFunction<PIO_APC_ROUTINE>> ApcRoutine,
-  ffi.Pointer<ffi.Void> ApcContext,
-  ffi.Pointer<IO_STATUS_BLOCK> IoStatusBlock,
-  int IoControlCode,
-  ffi.Pointer<ffi.Void> InputBuffer,
-  int InputBufferLength,
-  ffi.Pointer<ffi.Void> OutputBuffer,
-  int OutputBufferLength,
-);
-
-typedef _c_NtWaitForSingleObject = ffi.Int32 Function(
-  ffi.Pointer<ffi.Void> Handle,
-  ffi.Uint8 Alertable,
-  ffi.Pointer<LARGE_INTEGER> Timeout,
-);
-
-typedef _dart_NtWaitForSingleObject = int Function(
-  ffi.Pointer<ffi.Void> Handle,
-  int Alertable,
-  ffi.Pointer<LARGE_INTEGER> Timeout,
-);
-
-typedef _c_RtlIsNameLegalDOS8Dot3 = ffi.Uint8 Function(
-  ffi.Pointer<UNICODE_STRING> Name,
-  ffi.Pointer<STRING> OemName,
-  ffi.Pointer<ffi.Uint8> NameContainsSpaces,
-);
-
-typedef _dart_RtlIsNameLegalDOS8Dot3 = int Function(
-  ffi.Pointer<UNICODE_STRING> Name,
-  ffi.Pointer<STRING> OemName,
-  ffi.Pointer<ffi.Uint8> NameContainsSpaces,
-);
-
-typedef _c_RtlNtStatusToDosError = ffi.Uint32 Function(
-  ffi.Int32 Status,
-);
-
-typedef _dart_RtlNtStatusToDosError = int Function(
-  int Status,
-);
-
-typedef _c_NtQueryInformationProcess = ffi.Int32 Function(
-  ffi.Pointer<ffi.Void> ProcessHandle,
-  ffi.Int32 ProcessInformationClass,
-  ffi.Pointer<ffi.Void> ProcessInformation,
-  ffi.Uint32 ProcessInformationLength,
-  ffi.Pointer<ffi.Uint32> ReturnLength,
-);
-
-typedef _dart_NtQueryInformationProcess = int Function(
-  ffi.Pointer<ffi.Void> ProcessHandle,
-  int ProcessInformationClass,
-  ffi.Pointer<ffi.Void> ProcessInformation,
-  int ProcessInformationLength,
-  ffi.Pointer<ffi.Uint32> ReturnLength,
-);
-
-typedef _c_NtQueryInformationThread = ffi.Int32 Function(
-  ffi.Pointer<ffi.Void> ThreadHandle,
-  ffi.Int32 ThreadInformationClass,
-  ffi.Pointer<ffi.Void> ThreadInformation,
-  ffi.Uint32 ThreadInformationLength,
-  ffi.Pointer<ffi.Uint32> ReturnLength,
-);
-
-typedef _dart_NtQueryInformationThread = int Function(
-  ffi.Pointer<ffi.Void> ThreadHandle,
-  int ThreadInformationClass,
-  ffi.Pointer<ffi.Void> ThreadInformation,
-  int ThreadInformationLength,
-  ffi.Pointer<ffi.Uint32> ReturnLength,
-);
-
-typedef _c_NtQueryObject = ffi.Int32 Function(
-  ffi.Pointer<ffi.Void> Handle,
-  ffi.Int32 ObjectInformationClass,
-  ffi.Pointer<ffi.Void> ObjectInformation,
-  ffi.Uint32 ObjectInformationLength,
-  ffi.Pointer<ffi.Uint32> ReturnLength,
-);
-
-typedef _dart_NtQueryObject = int Function(
-  ffi.Pointer<ffi.Void> Handle,
-  int ObjectInformationClass,
-  ffi.Pointer<ffi.Void> ObjectInformation,
-  int ObjectInformationLength,
-  ffi.Pointer<ffi.Uint32> ReturnLength,
-);
-
-typedef _c_NtQuerySystemInformation = ffi.Int32 Function(
-  ffi.Int32 SystemInformationClass,
-  ffi.Pointer<ffi.Void> SystemInformation,
-  ffi.Uint32 SystemInformationLength,
-  ffi.Pointer<ffi.Uint32> ReturnLength,
-);
-
-typedef _dart_NtQuerySystemInformation = int Function(
-  int SystemInformationClass,
-  ffi.Pointer<ffi.Void> SystemInformation,
-  int SystemInformationLength,
-  ffi.Pointer<ffi.Uint32> ReturnLength,
-);
-
-typedef _c_NtQuerySystemTime = ffi.Int32 Function(
-  ffi.Pointer<LARGE_INTEGER> SystemTime,
-);
-
-typedef _dart_NtQuerySystemTime = int Function(
-  ffi.Pointer<LARGE_INTEGER> SystemTime,
-);
-
-typedef _c_RtlLocalTimeToSystemTime = ffi.Int32 Function(
-  ffi.Pointer<LARGE_INTEGER> LocalTime,
-  ffi.Pointer<LARGE_INTEGER> SystemTime,
-);
-
-typedef _dart_RtlLocalTimeToSystemTime = int Function(
-  ffi.Pointer<LARGE_INTEGER> LocalTime,
-  ffi.Pointer<LARGE_INTEGER> SystemTime,
-);
-
-typedef _c_RtlTimeToSecondsSince1970 = ffi.Uint8 Function(
-  ffi.Pointer<LARGE_INTEGER> Time,
-  ffi.Pointer<ffi.Uint32> ElapsedSeconds,
-);
-
-typedef _dart_RtlTimeToSecondsSince1970 = int Function(
-  ffi.Pointer<LARGE_INTEGER> Time,
-  ffi.Pointer<ffi.Uint32> ElapsedSeconds,
-);
-
-typedef _c_RtlFreeAnsiString = ffi.Void Function(
-  ffi.Pointer<STRING> AnsiString,
-);
-
-typedef _dart_RtlFreeAnsiString = void Function(
-  ffi.Pointer<STRING> AnsiString,
-);
-
-typedef _c_RtlFreeUnicodeString = ffi.Void Function(
-  ffi.Pointer<UNICODE_STRING> UnicodeString,
-);
-
-typedef _dart_RtlFreeUnicodeString = void Function(
-  ffi.Pointer<UNICODE_STRING> UnicodeString,
-);
-
-typedef _c_RtlFreeOemString = ffi.Void Function(
-  ffi.Pointer<STRING> OemString,
-);
-
-typedef _dart_RtlFreeOemString = void Function(
-  ffi.Pointer<STRING> OemString,
-);
-
-typedef _c_RtlInitString = ffi.Void Function(
-  ffi.Pointer<STRING> DestinationString,
-  ffi.Pointer<ffi.Int8> SourceString,
-);
-
-typedef _dart_RtlInitString = void Function(
-  ffi.Pointer<STRING> DestinationString,
-  ffi.Pointer<ffi.Int8> SourceString,
-);
-
-typedef _c_RtlInitStringEx = ffi.Int32 Function(
-  ffi.Pointer<STRING> DestinationString,
-  ffi.Pointer<ffi.Int8> SourceString,
-);
-
-typedef _dart_RtlInitStringEx = int Function(
-  ffi.Pointer<STRING> DestinationString,
-  ffi.Pointer<ffi.Int8> SourceString,
-);
-
-typedef _c_RtlInitAnsiString = ffi.Void Function(
-  ffi.Pointer<STRING> DestinationString,
-  ffi.Pointer<ffi.Int8> SourceString,
-);
-
-typedef _dart_RtlInitAnsiString = void Function(
-  ffi.Pointer<STRING> DestinationString,
-  ffi.Pointer<ffi.Int8> SourceString,
-);
-
-typedef _c_RtlInitAnsiStringEx = ffi.Int32 Function(
-  ffi.Pointer<STRING> DestinationString,
-  ffi.Pointer<ffi.Int8> SourceString,
-);
-
-typedef _dart_RtlInitAnsiStringEx = int Function(
-  ffi.Pointer<STRING> DestinationString,
-  ffi.Pointer<ffi.Int8> SourceString,
-);
-
-typedef _c_RtlInitUnicodeString = ffi.Void Function(
-  ffi.Pointer<UNICODE_STRING> DestinationString,
-  ffi.Pointer<ffi.Uint16> SourceString,
-);
-
-typedef _dart_RtlInitUnicodeString = void Function(
-  ffi.Pointer<UNICODE_STRING> DestinationString,
-  ffi.Pointer<ffi.Uint16> SourceString,
-);
-
-typedef _c_RtlAnsiStringToUnicodeString = ffi.Int32 Function(
-  ffi.Pointer<UNICODE_STRING> DestinationString,
-  ffi.Pointer<STRING> SourceString,
-  ffi.Uint8 AllocateDestinationString,
-);
-
-typedef _dart_RtlAnsiStringToUnicodeString = int Function(
-  ffi.Pointer<UNICODE_STRING> DestinationString,
-  ffi.Pointer<STRING> SourceString,
-  int AllocateDestinationString,
-);
-
-typedef _c_RtlUnicodeStringToAnsiString = ffi.Int32 Function(
-  ffi.Pointer<STRING> DestinationString,
-  ffi.Pointer<UNICODE_STRING> SourceString,
-  ffi.Uint8 AllocateDestinationString,
-);
-
-typedef _dart_RtlUnicodeStringToAnsiString = int Function(
-  ffi.Pointer<STRING> DestinationString,
-  ffi.Pointer<UNICODE_STRING> SourceString,
-  int AllocateDestinationString,
-);
-
-typedef _c_RtlUnicodeStringToOemString = ffi.Int32 Function(
-  ffi.Pointer<STRING> DestinationString,
-  ffi.Pointer<UNICODE_STRING> SourceString,
-  ffi.Uint8 AllocateDestinationString,
-);
-
-typedef _dart_RtlUnicodeStringToOemString = int Function(
-  ffi.Pointer<STRING> DestinationString,
-  ffi.Pointer<UNICODE_STRING> SourceString,
-  int AllocateDestinationString,
-);
-
-typedef _c_RtlUnicodeToMultiByteSize = ffi.Int32 Function(
-  ffi.Pointer<ffi.Uint32> BytesInMultiByteString,
-  ffi.Pointer<ffi.Uint16> UnicodeString,
-  ffi.Uint32 BytesInUnicodeString,
-);
-
-typedef _dart_RtlUnicodeToMultiByteSize = int Function(
-  ffi.Pointer<ffi.Uint32> BytesInMultiByteString,
-  ffi.Pointer<ffi.Uint16> UnicodeString,
-  int BytesInUnicodeString,
-);
-
-typedef _c_RtlCharToInteger = ffi.Int32 Function(
-  ffi.Pointer<ffi.Int8> String,
-  ffi.Uint32 Base,
-  ffi.Pointer<ffi.Uint32> Value,
-);
-
-typedef _dart_RtlCharToInteger = int Function(
-  ffi.Pointer<ffi.Int8> String,
-  int Base,
-  ffi.Pointer<ffi.Uint32> Value,
-);
-
-typedef _c_RtlConvertSidToUnicodeString = ffi.Int32 Function(
-  ffi.Pointer<UNICODE_STRING> UnicodeString,
-  ffi.Pointer<ffi.Void> Sid,
-  ffi.Uint8 AllocateDestinationString,
-);
-
-typedef _dart_RtlConvertSidToUnicodeString = int Function(
-  ffi.Pointer<UNICODE_STRING> UnicodeString,
-  ffi.Pointer<ffi.Void> Sid,
-  int AllocateDestinationString,
-);
-
-typedef _c_RtlUniform = ffi.Uint32 Function(
-  ffi.Pointer<ffi.Uint32> Seed,
-);
-
-typedef _dart_RtlUniform = int Function(
-  ffi.Pointer<ffi.Uint32> Seed,
-);
-
-typedef PPS_POST_PROCESS_INIT_ROUTINE = ffi.Void Function();
