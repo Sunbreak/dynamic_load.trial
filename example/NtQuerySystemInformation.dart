@@ -21,7 +21,7 @@ void main() {
         pBuffer.cast(),
         pNeedSize.value,
         nullptr);
-    if (status != STATUS_SUCCESS) throw Exception('$status');
+    if (status < 0) throw Exception('Query SystemProcessInformation error: $status');
 
     var address = pBuffer.address;
     var nextEntryOffset = 0;
@@ -29,7 +29,8 @@ void main() {
       address += nextEntryOffset;
       final procRef =
           Pointer.fromAddress(address).cast<SYSTEM_PROCESS_INFORMATION>().ref;
-      print('UniqueProcessId ${procRef.UniqueProcessId.cast<Uint32>().value}');
+      print('UniqueProcessId ${procRef.UniqueProcessId}');
+      print('NumberOfThreads ${procRef.NumberOfThreads}');
       nextEntryOffset = procRef.NextEntryOffset;
     } while (nextEntryOffset != 0);
   });

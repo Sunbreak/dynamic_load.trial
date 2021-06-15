@@ -10,6 +10,12 @@ functions:
   expose-typedefs:
     include:
       - 'NtQuerySystemInformation'
+structs:
+  rename:
+    '_SYSTEM_(.*)': 'SYSTEM_$1' # FIXME: https://github.com/dart-lang/ffigen/issues/233
+enums:
+  rename:
+    '_SYSTEM_(.*)': 'SYSTEM_$1' # FIXME: https://github.com/dart-lang/ffigen/issues/233
 size-map:
   long: 4
   unsigned long: 4

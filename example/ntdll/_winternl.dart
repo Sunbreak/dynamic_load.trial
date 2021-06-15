@@ -930,7 +930,7 @@ class _PROCESS_BASIC_INFORMATION extends ffi.Struct {
   external PVOID Reserved3;
 }
 
-class _SYSTEM_PROCESSOR_PERFORMANCE_INFORMATION extends ffi.Struct {
+class SYSTEM_PROCESSOR_PERFORMANCE_INFORMATION extends ffi.Struct {
   external LARGE_INTEGER IdleTime;
 
   external LARGE_INTEGER KernelTime;
@@ -964,7 +964,7 @@ class UnnamedStruct1 extends ffi.Struct {
 typedef LONG = ffi.Int32;
 typedef LONGLONG = ffi.Int64;
 
-class _SYSTEM_PROCESS_INFORMATION extends ffi.Struct {
+class SYSTEM_PROCESS_INFORMATION extends ffi.Struct {
   @ULONG()
   external int NextEntryOffset;
 
@@ -1032,7 +1032,7 @@ class _SYSTEM_PROCESS_INFORMATION extends ffi.Struct {
 typedef KPRIORITY = LONG;
 typedef SIZE_T = ULONG_PTR;
 
-class _SYSTEM_THREAD_INFORMATION extends ffi.Struct {
+class SYSTEM_THREAD_INFORMATION extends ffi.Struct {
   @ffi.Array.multi([3])
   external ffi.Array<LARGE_INTEGER> Reserved1;
 
@@ -1061,7 +1061,7 @@ class _SYSTEM_THREAD_INFORMATION extends ffi.Struct {
 
 typedef CLIENT_ID = _CLIENT_ID;
 
-class _SYSTEM_REGISTRY_QUOTA_INFORMATION extends ffi.Struct {
+class SYSTEM_REGISTRY_QUOTA_INFORMATION extends ffi.Struct {
   @ULONG()
   external int RegistryQuotaAllowed;
 
@@ -1071,7 +1071,7 @@ class _SYSTEM_REGISTRY_QUOTA_INFORMATION extends ffi.Struct {
   external PVOID Reserved1;
 }
 
-class _SYSTEM_BASIC_INFORMATION extends ffi.Struct {
+class SYSTEM_BASIC_INFORMATION extends ffi.Struct {
   @ffi.Array.multi([24])
   external ffi.Array<BYTE> Reserved1;
 
@@ -1084,32 +1084,32 @@ class _SYSTEM_BASIC_INFORMATION extends ffi.Struct {
 
 typedef CCHAR = ffi.Int8;
 
-class _SYSTEM_TIMEOFDAY_INFORMATION extends ffi.Struct {
+class SYSTEM_TIMEOFDAY_INFORMATION extends ffi.Struct {
   @ffi.Array.multi([48])
   external ffi.Array<BYTE> Reserved1;
 }
 
-class _SYSTEM_PERFORMANCE_INFORMATION extends ffi.Struct {
+class SYSTEM_PERFORMANCE_INFORMATION extends ffi.Struct {
   @ffi.Array.multi([312])
   external ffi.Array<BYTE> Reserved1;
 }
 
-class _SYSTEM_EXCEPTION_INFORMATION extends ffi.Struct {
+class SYSTEM_EXCEPTION_INFORMATION extends ffi.Struct {
   @ffi.Array.multi([16])
   external ffi.Array<BYTE> Reserved1;
 }
 
-class _SYSTEM_LOOKASIDE_INFORMATION extends ffi.Struct {
+class SYSTEM_LOOKASIDE_INFORMATION extends ffi.Struct {
   @ffi.Array.multi([32])
   external ffi.Array<BYTE> Reserved1;
 }
 
-class _SYSTEM_INTERRUPT_INFORMATION extends ffi.Struct {
+class SYSTEM_INTERRUPT_INFORMATION extends ffi.Struct {
   @ffi.Array.multi([24])
   external ffi.Array<BYTE> Reserved1;
 }
 
-class _SYSTEM_POLICY_INFORMATION extends ffi.Struct {
+class SYSTEM_POLICY_INFORMATION extends ffi.Struct {
   @ffi.Array.multi([2])
   external ffi.Array<PVOID> Reserved1;
 
@@ -1133,7 +1133,7 @@ abstract class _THREADINFOCLASS {
   static const int ThreadIsIoPending = 16;
 }
 
-class _SYSTEM_CODEINTEGRITY_INFORMATION extends ffi.Struct {
+class SYSTEM_CODEINTEGRITY_INFORMATION extends ffi.Struct {
   @ULONG()
   external int Length;
 
@@ -1141,7 +1141,7 @@ class _SYSTEM_CODEINTEGRITY_INFORMATION extends ffi.Struct {
   external int CodeIntegrityOptions;
 }
 
-abstract class _SYSTEM_INFORMATION_CLASS {
+abstract class SYSTEM_INFORMATION_CLASS {
   static const int SystemBasicInformation = 0;
   static const int SystemPerformanceInformation = 2;
   static const int SystemTimeOfDayInformation = 3;
